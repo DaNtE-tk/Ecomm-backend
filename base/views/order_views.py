@@ -72,6 +72,15 @@ def getMyOrders(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAdminUser])
+def getOrders(request):
+    print(request)
+    orders = Order.objects.all()
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getOrderById(request,pk):
     user = request.user
@@ -96,23 +105,3 @@ def updateOrderToPaid(request, pk):
     order.save()
     return Response('Order was paid')
 
-
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def getMyOrders(request):
-#     # print(request)
-#     # user = request.user
-#     # print(user)
-#     order = Order.objects.all()
-#     print(order)
-#     # orders = user.order_set.all()
-#     # print(orders)
-#     # serializer = OrderSerializer(orders, many=True)
-#     # return Response(serializer.data)
-#     return Response('My orders')
-
-
-# @api_view(['POST'])
-# def dummy(request):
-#     print('triggered')
-#     return Response('hii')
