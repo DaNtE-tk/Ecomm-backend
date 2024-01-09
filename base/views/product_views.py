@@ -20,17 +20,15 @@ from rest_framework import status
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def getProducts(request):
-    products = Product.objects.all()
+    query = request.query_params.get('keyword')
+    print('query: ',query)
+
+    if query == None:
+        query=''
+
+    products = Product.objects.filter(name__icontains=query)
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
-
-
-# @api_view(['GET'])
-# # @permission_classes([IsAuthenticated])
-# def getUsers(request):
-#     users = User.objects.all()
-#     serializer = UserSerializer(users, many=True)
-#     return Response(serializer.data)
 
 
 @api_view(['GET']) 
