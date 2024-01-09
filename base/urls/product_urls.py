@@ -23,7 +23,10 @@ urlpatterns = [
     path('',views.getProducts,name="products"),
     path('create/',views.createProduct,name="product-create"),
     path('upload-image/',views.uploadImage,name="product-upload-image"),
+    
+    path('<str:pk>/reviews/',views.createProductReview,name="product-review"),
     path('<str:pk>/',views.getProduct,name="product"),
+
     path('delete/<str:pk>/', views.deleteProduct, name='product-delete'),
     path('update/<str:pk>/', views.updateProduct, name='product-update'),
     
